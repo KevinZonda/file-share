@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {API_BASE_PATH, FileInfoStore} from "../store";
 import {Badge, Button, Card} from "antd";
 
-function fileSize(bytes: number | undefined, si = true, dp = 1) {
+function fileSize(bytes: number | undefined, si = false, dp = 1) {
   if (!bytes || bytes < 0) {
     return 'Unknown';
   }
