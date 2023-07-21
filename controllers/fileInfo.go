@@ -64,7 +64,7 @@ func fetchFileInfo(c *gin.Context, _id string) (mod models.FileModel, ok bool) {
 	}
 
 	if info.IsExpired() {
-		// go removeFile(id)
+		go removeFile(id)
 		c.JSON(404, models.NewErrResponse("File expired"))
 		c.Abort()
 		return mod, false

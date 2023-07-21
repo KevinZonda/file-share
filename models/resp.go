@@ -9,9 +9,7 @@ func NewErrResponse(msg string) ErrResponse {
 }
 
 type UploadResultResponse struct {
-	ID  string `json:"id"`
-	Uid string `json:"uid"`
-	Url string `json:"url"`
+	ID string `json:"id"`
 }
 
 type FileInfoResponse struct {

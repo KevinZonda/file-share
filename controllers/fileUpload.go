@@ -47,5 +47,5 @@ func fileUpload(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	c.JSON(200, models.UploadResultResponse{ID: fileId, Uid: fileId, Url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"})
+	c.JSON(200, models.UploadResultResponse{ID: fileId})
 }
