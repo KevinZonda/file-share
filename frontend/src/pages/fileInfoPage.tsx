@@ -6,11 +6,11 @@ import {Badge, Button, Card} from "antd";
 export const FileInfoPage = observer(() => {
   const {id} = useParams();
   if (!id) {
-    return <>No id</>;
+    return <>No id :X</>;
   }
   const info = FileInfoStore.getInfo(id);
   if (!info) {
-    return <>No info</>;
+    return <>No data :(</>;
   }
 
   return (

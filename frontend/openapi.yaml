@@ -3,9 +3,9 @@ info:
   title: δ by KevinZonda
   version: 1.0.0
 servers:
-  - url: http://127.0.0.1:8081/api/file
+  - url: https://sigma.kevinzonda.com/funcs/file-share/api
 paths:
-  /info:
+  /file/info:
     post:
       tags:
         - File
@@ -23,7 +23,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileInfoResponse'
-  /download:
+  /file/download:
     post:
       tags:
         - File

@@ -140,7 +140,7 @@ export const FileApiAxiosParamCreator = function (configuration?: Configuration)
         downloadFile: async (downloadRequest: DownloadRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'downloadRequest' is not null or undefined
             assertParamExists('downloadFile', 'downloadRequest', downloadRequest)
-            const localVarPath = `/download`;
+            const localVarPath = `/file/download`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -175,7 +175,7 @@ export const FileApiAxiosParamCreator = function (configuration?: Configuration)
         getFileInfo: async (fileInfoRequest: FileInfoRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'fileInfoRequest' is not null or undefined
             assertParamExists('getFileInfo', 'fileInfoRequest', fileInfoRequest)
-            const localVarPath = `/info`;
+            const localVarPath = `/file/info`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
