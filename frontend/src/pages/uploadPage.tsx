@@ -2,11 +2,13 @@ import '../App.css'
 import {Button, message, UploadFile} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import type {UploadProps} from 'antd';
-import {API_BASE_PATH} from "../store";
+import {API_BASE_PATH, ConfigStore} from "../store";
 import {useState} from "react";
 import {RcFile} from "antd/es/upload";
 import Dragger from "antd/es/upload/Dragger";
 import {Link} from "react-router-dom";
+import {SettingModal} from "../components/settingModal.tsx";
+import Title from "antd/es/typography/Title";
 
 
 function UploadPage() {
@@ -31,15 +33,18 @@ function UploadPage() {
     fetch(`${API_BASE_PATH}/file/upload`, {
       method: 'POST',
       body: formData,
+      headers: {
+        "Authorisation": ConfigStore.ApiKey
+      }
     })
       .then((res) => res.json())
       .then((res) => {
         setFile(undefined);
-        message.success('upload successfully.');
+        message.success('Upload successfully.');
         setId(res.id)
       })
       .catch(() => {
-        message.error('upload failed.');
+        message.error('Upload failed.');
       })
       .finally(() => {
         setUploading(false);
@@ -48,6 +53,7 @@ function UploadPage() {
 
   return (
     <>
+      <Title>Upload to KevinZonda Υ</Title>
       <Dragger {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined/>
@@ -63,11 +69,16 @@ function UploadPage() {
         onClick={handleUpload}
         disabled={file === undefined}
         loading={uploading}
-        style={{marginTop: 16}}
+        style={{margin: 6, marginTop: 16}}
       >
         {uploading ? 'Uploading' : 'Start Upload'}
       </Button>
-      <Link to={`/files/${id}`}>{id}</Link>
+      <SettingModal/>
+      {
+        id && id !== ''
+          ? <><br></br><Link to={`/files/${id}`}>{id}</Link></>
+          : <>  </>
+      }
     </>
   )
 }
