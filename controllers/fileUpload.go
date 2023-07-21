@@ -22,7 +22,7 @@ func fileUpload(c *gin.Context) {
 	_fileInfo := models.FileModel{
 		Name:       file.Filename,
 		UploadedAt: time.Now().Unix(),
-		ExpiresAt:  time.Now().Add(time.Hour).Unix(),
+		ExpiredAt:  time.Now().Add(time.Hour).Unix(),
 	}
 	fileId := shared.GetRandomName()
 	saveToPath := shared.GetBasePathById(fileId)

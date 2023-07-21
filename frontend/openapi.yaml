@@ -1,0 +1,93 @@
+openapi: 3.0.1
+info:
+  title: δ by KevinZonda
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8081/api/file
+paths:
+  /info:
+    post:
+      tags:
+        - File
+      operationId: get-file-info
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileInfoRequest'
+      responses:
+        '200':
+          description: 'ok'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+  /download:
+    post:
+      tags:
+        - File
+      operationId: download-file
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadRequest'
+      responses:
+        '200':
+          description: 'ok'
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+
+components:
+  securitySchemes:
+    Token:
+      type: apiKey
+      in: header
+      name: Authorisation
+  schemas:
+
+    FileUploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+
+    FileInfoResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        size:
+          type: number
+        expired_at:
+          type: number
+        uploaded_at:
+          type: number
+        password:
+          type: boolean
+    FileInfoRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+    DownloadRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        msg:
+          type: string
+

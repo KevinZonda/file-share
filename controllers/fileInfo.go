@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/KevinZonda/GoX/pkg/iox"
 	"github.com/KevinZonda/file-sharer/models"
 	"github.com/KevinZonda/file-sharer/shared"
 	"github.com/gin-gonic/gin"
+	"log"
 	"os"
 )
 
@@ -47,20 +49,23 @@ func fetchFileInfo(c *gin.Context, _id string) (mod models.FileModel, ok bool) {
 
 	basePath := shared.GetBasePathById(id)
 	if !iox.ExistDir(basePath) {
+		fmt.Println("File not found", basePath)
+		fmt.Println("ENV", os.Getenv("PWD"))
 		c.JSON(404, models.NewErrResponse("File not found"))
 		c.Abort()
 		return mod, false
 	}
 	info, err := loadFileInfo(id)
 	if err != nil {
+		log.Println("Cannot load file info", err)
 		c.JSON(500, models.NewErrResponse("Cannot load file info"))
 		c.Abort()
 		return mod, false
 	}
 
 	if info.IsExpired() {
-		go removeFile(id)
-		c.JSON(404, models.NewErrResponse("File not found"))
+		// go removeFile(id)
+		c.JSON(404, models.NewErrResponse("File expired"))
 		c.Abort()
 		return mod, false
 	}

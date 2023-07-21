@@ -9,5 +9,6 @@ func Router(e *gin.Engine) {
 
 	apiGroup.POST("/file/upload", fileUpload)
 	apiGroup.POST("/file/download", fileDownload)
-	apiGroup.GET("/file/info", fileInfo)
+	apiGroup.GET("/file/:id", getFileDownload)
+	apiGroup.POST("/file/info", fileInfo)
 }
