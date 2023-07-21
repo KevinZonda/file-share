@@ -23,6 +23,7 @@ func fileUpload(c *gin.Context) {
 		Name:       file.Filename,
 		UploadedAt: time.Now().Unix(),
 		ExpiredAt:  time.Now().Add(time.Hour).Unix(),
+		Size:       file.Size,
 	}
 	fileId := shared.GetRandomName()
 	saveToPath := shared.GetBasePathById(fileId)

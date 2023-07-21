@@ -10,6 +10,7 @@ type FileModel struct {
 	UploadedAt int64  `json:"uploaded_at"`
 	ExpiredAt  int64  `json:"expired_at"`
 	Password   string `json:"password"`
+	Size       int64  `json:"size"`
 }
 
 func (f FileModel) IsExpired() bool {
@@ -24,5 +25,6 @@ func (f FileModel) ToResponse() FileInfoResponse {
 		UploadedAt: f.UploadedAt,
 		ExpiredAt:  f.ExpiredAt,
 		Password:   f.Password != "",
+		Size:       f.Size,
 	}
 }
