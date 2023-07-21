@@ -11,7 +11,7 @@ func InitGin() {
 	_engine = gin.New()
 
 	corsConf := cors.DefaultConfig()
-	corsConf.AllowHeaders = append(corsConf.AllowHeaders, "Authorisation")
+	corsConf.AllowHeaders = append(corsConf.AllowHeaders, "Authorisation", "X-Requested-With")
 	corsConf.AllowAllOrigins = true
 
 	_engine.Use(

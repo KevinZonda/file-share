@@ -13,7 +13,6 @@ export const FileInfoPage = observer(() => {
     return <>No info</>;
   }
 
-
   return (
     <>
       <Badge.Ribbon text="by KevinZonda">
@@ -25,8 +24,13 @@ export const FileInfoPage = observer(() => {
             <p>{`Uploaded At: ${info.uploaded_at ? new Date(info.uploaded_at * 1000) : 'unknown'}`}</p>
             <p>{`Expired At: ${info.expired_at ? new Date(info.expired_at * 1000) : 'unknown'}`}</p>
           </div>
-          <Button href={`${API_BASE_PATH}/file/${id}`}>Download</Button>
+
+          <Button type="primary" href={`${API_BASE_PATH}/file/${id}`} style={{margin: '6px'}}>Download</Button>
+          <Button type="link" onClick={() => {
+            navigator.clipboard.writeText(window.location.href)
+          }} style={{margin: '6px'}}>Copy link</Button>
         </Card>
+
       </Badge.Ribbon>
     </>
   )

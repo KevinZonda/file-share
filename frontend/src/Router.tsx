@@ -1,18 +1,14 @@
 import {createBrowserRouter} from "react-router-dom";
-import App from "./App.tsx";
+import UploadPage from "./pages/uploadPage.tsx";
 import {FileInfoPage} from "./pages/fileInfoPage.tsx";
 
 export const router = createBrowserRouter([
   {
-    path: "/app",
-    element: <App />,
-  },
-  {
     path: "/",
-    element: <App />,
+    element: <UploadPage />,
   },
   {
-    path: "/:id",
+    path: "/files/:id",
     element: <FileInfoPage />,
   }
 ]);
