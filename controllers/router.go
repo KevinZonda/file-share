@@ -11,6 +11,7 @@ func Router(e *gin.Engine) {
 	apiGroup := e.Group("/api")
 
 	apiGroup.POST("/file/upload", auth, fileUpload)
+	apiGroup.POST("/file/upload/pastebin", auth, pasteBin)
 	apiGroup.POST("/file/download", fileDownload)
 	apiGroup.GET("/file/:id", getFileDownload)
 	apiGroup.POST("/file/info", fileInfo)

@@ -110,6 +110,18 @@ export interface FileInfoResponse {
      * @memberof FileInfoResponse
      */
     'password'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FileInfoResponse
+     */
+    'paste_bin'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FileInfoResponse
+     */
+    'content'?: string;
 }
 /**
  * 
@@ -121,6 +133,44 @@ export interface FileUploadResponse {
      * 
      * @type {string}
      * @memberof FileUploadResponse
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PasteBinUploadRequest
+ */
+export interface PasteBinUploadRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PasteBinUploadRequest
+     */
+    'content'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PasteBinUploadRequest
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PasteBinUploadRequest
+     */
+    'expired_at'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface UploadResponse
+ */
+export interface UploadResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadResponse
      */
     'id'?: string;
 }
@@ -201,6 +251,41 @@ export const FileApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {PasteBinUploadRequest} pasteBinUploadRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadPastebin: async (pasteBinUploadRequest: PasteBinUploadRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pasteBinUploadRequest' is not null or undefined
+            assertParamExists('uploadPastebin', 'pasteBinUploadRequest', pasteBinUploadRequest)
+            const localVarPath = `/file/upload/pastebin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pasteBinUploadRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -231,6 +316,16 @@ export const FileApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFileInfo(fileInfoRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {PasteBinUploadRequest} pasteBinUploadRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadPastebin(pasteBinUploadRequest: PasteBinUploadRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadPastebin(pasteBinUploadRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -258,6 +353,15 @@ export const FileApiFactory = function (configuration?: Configuration, basePath?
          */
         getFileInfo(fileInfoRequest: FileInfoRequest, options?: any): AxiosPromise<FileInfoResponse> {
             return localVarFp.getFileInfo(fileInfoRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PasteBinUploadRequest} pasteBinUploadRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadPastebin(pasteBinUploadRequest: PasteBinUploadRequest, options?: any): AxiosPromise<UploadResponse> {
+            return localVarFp.uploadPastebin(pasteBinUploadRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -289,6 +393,17 @@ export class FileApi extends BaseAPI {
      */
     public getFileInfo(fileInfoRequest: FileInfoRequest, options?: AxiosRequestConfig) {
         return FileApiFp(this.configuration).getFileInfo(fileInfoRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PasteBinUploadRequest} pasteBinUploadRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FileApi
+     */
+    public uploadPastebin(pasteBinUploadRequest: PasteBinUploadRequest, options?: AxiosRequestConfig) {
+        return FileApiFp(this.configuration).uploadPastebin(pasteBinUploadRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

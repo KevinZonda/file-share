@@ -23,4 +23,12 @@ export class _configStore {
   public get ApiKey() {
     return this._apiKey
   }
+
+  public get AxiosOptions() {
+    return {
+      headers: {
+        "Authorisation": this.ApiKey
+      }
+    }
+  }
 }

@@ -25,15 +25,22 @@ func getFileDownload(c *gin.Context) {
 
 func _downloadFile(c *gin.Context, id, password string) {
 	id = filterId(id)
-	if info, ok := fetchFileInfo(c, id); ok {
-		_path := shared.GetDataPathById(id)
-		if iox.ExistFile(_path) {
-			c.FileAttachment(shared.GetDataPathById(id), info.Name)
-		} else {
-			c.JSON(404, models.NewErrResponse("File not found"))
-			c.Abort()
-			return
-		}
+	info, ok := fetchFileInfo(c, id)
+	if !ok {
+		c.JSON(404, models.NewErrResponse("File not found"))
 		return
 	}
+	if info.PasteBin {
+		c.String(200, *info.Content)
+		return
+	}
+	_path := shared.GetDataPathById(id)
+	if iox.ExistFile(_path) {
+		c.FileAttachment(shared.GetDataPathById(id), info.Name)
+	} else {
+		c.JSON(404, models.NewErrResponse("File not found"))
+		c.Abort()
+		return
+	}
+	return
 }

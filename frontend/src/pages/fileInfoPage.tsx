@@ -2,6 +2,7 @@ import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
 import {API_BASE_PATH, FileInfoStore} from "../store";
 import {Badge, Button, Card} from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 function fileSize(bytes: number | undefined, si = false, dp = 1) {
   if (!bytes || bytes < 0) {
@@ -50,6 +51,13 @@ export const FileInfoPage = observer(() => {
             <p>{`Uploaded At: ${info.uploaded_at ? new Date(info.uploaded_at * 1000) : 'unknown'}`}</p>
             <p>{`Expired At: ${info.expired_at ? new Date(info.expired_at * 1000) : 'unknown'}`}</p>
           </div>
+
+          {
+            info.paste_bin === true &&
+              <>
+                  <TextArea value={info.content}/>
+              </>
+          }
 
           <Button type="primary" href={`${API_BASE_PATH}/file/${id}`} style={{margin: '6px'}}>Download</Button>
           <Button type="link" onClick={() => {

@@ -13,9 +13,11 @@ type UploadResultResponse struct {
 }
 
 type FileInfoResponse struct {
-	Name       string `json:"name"`
-	UploadedAt int64  `json:"uploaded_at"`
-	ExpiredAt  int64  `json:"expired_at"`
-	Password   bool   `json:"password"`
-	Size       int64  `json:"size"`
+	Name       string  `json:"name"`
+	UploadedAt int64   `json:"uploaded_at"`
+	ExpiredAt  int64   `json:"expired_at"`
+	Password   bool    `json:"password"`
+	Size       int64   `json:"size"`
+	PasteBin   bool    `json:"paste_bin"`
+	Content    *string `json:"content"`
 }

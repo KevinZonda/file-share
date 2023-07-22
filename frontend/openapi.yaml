@@ -5,6 +5,24 @@ info:
 servers:
   - url: https://sigma.kevinzonda.com/funcs/file-share/api
 paths:
+  /file/upload/pastebin:
+    post:
+      tags:
+        - File
+      operationId: upload-pastebin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasteBinUploadRequest'
+      responses:
+        '200':
+          description: 'ok'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
   /file/info:
     post:
       tags:
@@ -57,6 +75,20 @@ components:
         id:
           type: string
 
+    PasteBinUploadRequest:
+      type: object
+      properties:
+        content:
+          type: string
+        password:
+          type: string
+        expired_at:
+          type: number
+    UploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
     FileInfoResponse:
       type: object
       properties:
@@ -70,6 +102,10 @@ components:
           type: number
         password:
           type: boolean
+        paste_bin:
+          type: boolean
+        content:
+          type: string
     FileInfoRequest:
       type: object
       properties:
