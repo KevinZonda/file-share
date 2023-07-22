@@ -52,7 +52,7 @@ function UploadPage() {
   };
 
   return (
-    <>
+    <div  className="xroot">
       <Title>Upload to KevinZonda Υ</Title>
       <Dragger {...props}>
         <p className="ant-upload-drag-icon">
@@ -79,7 +79,7 @@ function UploadPage() {
           ? <><br></br><Link to={`/files/${id}`}>{id}</Link></>
           : <>  </>
       }
-    </>
+    </div>
   )
 }
 

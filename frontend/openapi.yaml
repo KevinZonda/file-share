@@ -80,6 +80,8 @@ components:
       properties:
         content:
           type: string
+        name:
+          type: string
         password:
           type: string
         expired_at:

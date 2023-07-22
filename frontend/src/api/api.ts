@@ -153,6 +153,12 @@ export interface PasteBinUploadRequest {
      * @type {string}
      * @memberof PasteBinUploadRequest
      */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PasteBinUploadRequest
+     */
     'password'?: string;
     /**
      * 

@@ -41,7 +41,7 @@ export const FileInfoPage = observer(() => {
   }
 
   return (
-    <>
+    <div className={'xroot'}>
       <Badge.Ribbon text="by KevinZonda">
         <Card title={`File ID: ${id ?? ""}`} size="small"
               style={{width: '80vw'}}>
@@ -66,6 +66,6 @@ export const FileInfoPage = observer(() => {
         </Card>
 
       </Badge.Ribbon>
-    </>
+    </div>
   )
 })

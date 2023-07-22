@@ -13,5 +13,5 @@ type NewPasteBinRequest struct {
 	Name     string `json:"name"`
 	Content  string `json:"content"`
 	Password string `json:"password"`
-	ExpireAt int64  `json:"expire_at"`
+	ExpireAt int64  `json:"expired_at"`
 }
