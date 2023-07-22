@@ -5,6 +5,7 @@ import type {DatePickerProps} from 'antd/es/date-picker';
 import {Editor, useMonaco} from "@monaco-editor/react";
 import './uploadPasteBinPage.css'
 import Title from "antd/es/typography/Title";
+import {Link} from "react-router-dom";
 
 export const UploadPasteBinPage = () => {
   const monaco = useMonaco()
@@ -17,6 +18,7 @@ export const UploadPasteBinPage = () => {
   const [title, setTitle] = useState("Unnamed");
   const [expireAt, setExpireAt] = useState<number>(Date.now);
   const [lang, setLang] = useState("md");
+  const [id, setId] = useState<string | undefined>(undefined);
 
   const onOk = (value: DatePickerProps['value']) => {
     if (value) {
@@ -55,12 +57,12 @@ export const UploadPasteBinPage = () => {
     <Space direction='horizontal' style={{width: '100%', marginBottom: '20px'}}>
       {"Expire At:"}
       <DatePicker showTime onOk={onOk}/>
-      <Button onClick={() =>
+      <Button type="primary" onClick={() =>
         FileAPI.uploadPastebin({
           content: text,
           expired_at: Math.floor(expireAt / 1000),
           name: title
-        }, ConfigStore.AxiosOptions)}>Upload</Button>
+        }, ConfigStore.AxiosOptions).then(res => setId(res.data.id))}>Upload</Button>
     </Space>
 
     <div style={{width: '100%', height: '50vh', background: 'blue', padding: '2px'}}>
@@ -72,6 +74,11 @@ export const UploadPasteBinPage = () => {
           theme={ConfigStore.DefaultTheme() === 'dark' ? 'vs-dark' : 'vs'}
         />
     </div>
+    {
+      id && id !== ''
+        ? <><br></br><Link to={`/files/${id}`}>{id}</Link></>
+        : <>  </>
+    }
 
 
   </div>)

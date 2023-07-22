@@ -73,6 +73,9 @@ function UploadPage() {
       >
         {uploading ? 'Uploading' : 'Start Upload'}
       </Button>
+      <Button href={"/pastebin"}>
+        PasteBin
+      </Button>
       <SettingModal/>
       {
         id && id !== ''
