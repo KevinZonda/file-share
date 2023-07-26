@@ -13,6 +13,8 @@ import (
 
 func fileUpload(c *gin.Context) {
 	file, _ := c.FormFile("file")
+	password := c.Param("password")
+
 	if file.Size > shared.GetConfig().MaxSizeInKiB*1024 {
 		c.JSON(400, models.NewErrResponse("File too large"))
 		c.Abort()
@@ -25,6 +27,11 @@ func fileUpload(c *gin.Context) {
 		ExpiredAt:  time.Now().Add(time.Hour).Unix(),
 		Size:       file.Size,
 	}
+
+	if password != "" {
+		_fileInfo.Password = shared.DefaultHash(password)
+	}
+
 	fileId := shared.GetRandomName()
 	saveToPath := shared.GetBasePathById(fileId)
 	err := os.MkdirAll(saveToPath, 0777)

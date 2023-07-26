@@ -30,6 +30,12 @@ func _downloadFile(c *gin.Context, id, password string) {
 		c.JSON(404, models.NewErrResponse("File not found"))
 		return
 	}
+
+	if info.Password != "" && shared.VerifyHash(password, info.Password) {
+		c.JSON(401, models.NewErrResponse("Unauthorised"))
+		return
+	}
+
 	if info.PasteBin {
 		c.String(200, *info.Content)
 		return
