@@ -1,5 +1,5 @@
 import '../App.css'
-import {Button, message, UploadFile} from 'antd';
+import {Button, Input, message, UploadFile} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import type {UploadProps} from 'antd';
 import {API_BASE_PATH, ConfigStore} from "../store";
@@ -14,6 +14,7 @@ import Title from "antd/es/typography/Title";
 function UploadPage() {
   const [file, setFile] = useState<UploadFile>();
   const [uploading, setUploading] = useState(false);
+  const [password, setPassword] = useState('');
   const [id, setId] = useState('');
   const props: UploadProps = {
     multiple: false,
@@ -30,7 +31,7 @@ function UploadPage() {
     formData.append('file', file as RcFile)
     setUploading(true);
     // You can use any AJAX library you like
-    fetch(`${API_BASE_PATH}/file/upload`, {
+    fetch(`${API_BASE_PATH}/file/upload${password !== '' ? `?password=${password}` : ''}`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -64,6 +65,7 @@ function UploadPage() {
           banned files.
         </p>
       </Dragger>
+      <Input.Password style={{marginTop: 16}} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
       <Button
         type="primary"
         onClick={handleUpload}
