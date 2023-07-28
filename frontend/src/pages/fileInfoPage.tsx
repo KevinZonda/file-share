@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
 import {API_BASE_PATH, FileInfoStore} from "../store";
 import {Badge, Button, Card, Input} from "antd";
-import {useState} from "react";
+import  {useState} from "react";
 import Title from "antd/es/typography/Title";
 
 function fileSize(bytes: number | undefined, si = false, dp = 1) {
@@ -37,7 +37,8 @@ export const FileInfoPage = observer(() => {
   if (!id) {
     return <>No id :X</>;
   }
-  const info = FileInfoStore.getInfo(id);
+  FileInfoStore.id = id
+  let info = FileInfoStore.getInfo(id);
   if (!info) {
     if (FileInfoStore.isLoading) {
       return <>Loading...</>;
@@ -45,14 +46,14 @@ export const FileInfoPage = observer(() => {
     return <>No data :(</>;
   }
 
-  if (info.password === true && (info.size ?? -1 >= 0)) {
+  if (FileInfoStore.needPassword) {
     return (
       <div className={'xroot'}>
         <Title>Password Protected</Title>
         <Input.Password placeholder="Password" value={password}
                         onChange={(e) => setPassword(e.target.value)}/>
         <Button type="primary" onClick={() => {
-          FileInfoStore.getInfoWithPassword(id, password, true)
+          info = FileInfoStore.getInfoWithPassword(id, password, true)
         }}>Enter</Button>
       </div>
     );

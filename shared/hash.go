@@ -9,9 +9,10 @@ func _sha256(s string) string {
 }
 
 func DefaultHash(s string) string {
-	return _sha256(s)
+	return s
 }
 
 func VerifyHash(key, hash string) bool {
-	return _sha256(key) == hash
+	return key == hash
+	//return _sha256(key) == hash
 }

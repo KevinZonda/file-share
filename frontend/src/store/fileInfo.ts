@@ -33,8 +33,24 @@ export class _fileInfoStore {
     return this.infoSet[id]
   }
 
+  private _id = ''
+  public get id() {
+    return this._id
+  }
+  public set id(id: string) {
+    this._id = id
+  }
+
+  public get needPassword() : boolean {
+    const info = this.infoSet[this.id]
+    if (info) {
+       return info.password === true && ((info.size ?? -1) < 0)
+    }
+    return false
+  }
+
   public getInfoWithPassword(id: string, password: string, forced: boolean = false) {
-    if (this.infoSet[id] && !forced && (this.infoSet[id].size ?? -1 >= 0)) {
+    if (this.infoSet[id] && !forced && ((this.infoSet[id].size ?? -1) >= 0)) {
       return this.infoSet[id]
     }
     runInAction(() => {
