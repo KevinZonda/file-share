@@ -13,7 +13,7 @@ import (
 
 func fileUpload(c *gin.Context) {
 	file, _ := c.FormFile("file")
-	password := c.Param("password")
+	password := c.Query("password")
 
 	if file.Size > shared.GetConfig().MaxSizeInKiB*1024 {
 		c.JSON(400, models.NewErrResponse("File too large"))
