@@ -36,7 +36,7 @@ func fileInfo(c *gin.Context) {
 	}
 
 	if info, ok := fetchFileInfo(c, req.ID); ok {
-		if info.Password != "" && shared.VerifyHash(req.Password, info.Password) {
+		if info.Password != "" && !shared.VerifyHash(req.Password, info.Password) {
 			c.JSON(200, info.ToResponse().HideIfHasPassword())
 		}
 		c.JSON(200, info.ToResponse())
