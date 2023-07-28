@@ -78,7 +78,7 @@ export const FileInfoPage = observer(() => {
 
 
           <Button type="primary"
-                  href={`${API_BASE_PATH}/file/${id}${info.password ? "?password=" + info.password : ""}`}
+                  href={`${API_BASE_PATH}/file/${id}${info.password ? "?password=" + password : ""}`}
                   style={{margin: '6px'}}>Download</Button>
           <Button type="link" onClick={() => {
             navigator.clipboard.writeText(window.location.href)
