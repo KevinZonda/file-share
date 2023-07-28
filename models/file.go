@@ -32,3 +32,13 @@ func (f FileModel) ToResponse() FileInfoResponse {
 		Content:    f.Content,
 	}
 }
+
+func (r FileInfoResponse) HideIfHasPassword() FileInfoResponse {
+	if !r.Password {
+		return r
+	}
+	r.Content = nil
+	r.Name = "Secret"
+	r.Size = -1
+	return r
+}
