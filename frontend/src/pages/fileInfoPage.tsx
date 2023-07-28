@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
 import {API_BASE_PATH, FileInfoStore} from "../store";
 import {Badge, Button, Card, Input} from "antd";
-import  {useState} from "react";
+import {useState} from "react";
 import Title from "antd/es/typography/Title";
 
 function fileSize(bytes: number | undefined, si = false, dp = 1) {
