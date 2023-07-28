@@ -45,7 +45,7 @@ export const FileInfoPage = observer(() => {
     return <>No data :(</>;
   }
 
-  if (info.password === true) {
+  if (info.password === true && (info.size ?? -1 >= 0)) {
     return (
       <div className={'xroot'}>
         <Title>Password Protected</Title>
