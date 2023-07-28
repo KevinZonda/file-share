@@ -1,7 +1,9 @@
 import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
 import {API_BASE_PATH, FileInfoStore} from "../store";
-import {Badge, Button, Card} from "antd";
+import {Badge, Button, Card, Input} from "antd";
+import {useState} from "react";
+import Title from "antd/es/typography/Title";
 
 function fileSize(bytes: number | undefined, si = false, dp = 1) {
   if (!bytes || bytes < 0) {
@@ -31,14 +33,30 @@ function fileSize(bytes: number | undefined, si = false, dp = 1) {
 
 export const FileInfoPage = observer(() => {
   const {id} = useParams();
+  const [password, setPassword] = useState('');
   if (!id) {
     return <>No id :X</>;
   }
   const info = FileInfoStore.getInfo(id);
   if (!info) {
+    if (FileInfoStore.isLoading) {
+      return <>Loading...</>;
+    }
     return <>No data :(</>;
   }
 
+  if (info.password === true) {
+    return (
+      <div className={'xroot'}>
+        <Title>Password Protected</Title>
+        <Input.Password placeholder="Password" value={password}
+                        onChange={(e) => setPassword(e.target.value)}/>
+        <Button type="primary" onClick={() => {
+          FileInfoStore.getInfoWithPassword(id, password, true)
+        }}>Enter</Button>
+      </div>
+    );
+  }
   return (
     <div className={'xroot'}>
       <Badge.Ribbon text="by KevinZonda">
@@ -58,7 +76,9 @@ export const FileInfoPage = observer(() => {
           </div>
 
 
-          <Button type="primary" href={`${API_BASE_PATH}/file/${id}`} style={{margin: '6px'}}>Download</Button>
+          <Button type="primary"
+                  href={`${API_BASE_PATH}/file/${id}${info.password ? "?password=" + info.password : ""}`}
+                  style={{margin: '6px'}}>Download</Button>
           <Button type="link" onClick={() => {
             navigator.clipboard.writeText(window.location.href)
           }} style={{margin: '6px'}}>Copy link</Button>
